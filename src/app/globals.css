@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* ============================================================================
+ * FARBY A FONTY
+ * ============================================================================
+ * Tailwind CSS v4 číta tému priamo odtiaľto (@theme), netreba tailwind.config.
+ *
+ * Táto šablóna má dve farebné vrstvy:
+ *
+ *  1. Základná paleta stránky (--color-split-*) — striedanie svetlých pásov,
+ *     karty, text, tmavá päta:
+ *       - pozadie sekcie:   #fcd7ad (teplá broskyňová)
+ *       - povrchy/karty:    #ffffff (biela)
+ *       - text/nadpisy:     #413620 (tmavá hnedá)
+ *       - akcent:           #7a4a2f (teplá hnedá) — CTA, tenké čiary
+ *
+ *  2. Identita "kuchynský objednávkový lístok" (--color-paper/ink/stamp/brass)
+ *     — použitá v hlavičke a Hero sekcii (papierové pozadie, pečiatka, klip,
+ *     zúbkovaný okraj fotky):
+ *       - papier:  #f7f3ea
+ *       - text:    #241c15
+ *       - pečiatka:#a8342a (LEN pečiatka/badge)
+ *       - mosadz:  #b08d57 (čiary, klip, sekundárne detaily)
+ * ============================================================================ */
+@theme {
+  /* Základná paleta stránky. */
+  --color-split-bg: #fcd7ad;
+  --color-split-bg-alt: #ffffff;
+  --color-split-ink: #413620;
+  --color-split-accent: #7a4a2f;
+
+  /* Identita "kuchynský objednávkový lístok" — hlavička + Hero. */
+  --color-paper: #f7f3ea;
+  --color-ink: #241c15;
+  --color-stamp: #a8342a;
+  --color-brass: #b08d57;
+
+  /* Fonty (Google Fonts, načítané v src/app/layout.tsx cez next/font). */
+  --font-fraunces: var(--font-fraunces-loaded);
+  --font-inter: var(--font-inter-loaded);
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-split-bg-alt);
+  color: var(--color-split-ink);
+}
+
+/* Odsadenie pre sticky header pri skoku na kotvu (výška h-16 = 4rem).
+   Zahŕňa aj footer[id] — Kontakt je v päte, nie vo vlastnej sekcii. */
+:is(section, footer)[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* ============================================================================
+ * Hlavička + Hero — identita "kuchynský objednávkový lístok"
+ * ============================================================================
+ * Farby: --color-paper/--color-ink/--color-stamp/--color-brass (viď @theme).
+ * Použité v src/components/Header.tsx a Hero.tsx.
+ * ------------------------------------------------------------------------- */
+
+/* Pečiatka nahrádzajúca eyebrow text ("VITAJTE") — oválny dvojitý rámik,
+   pootočený, strojopisné písmo. Dvojitý rámček dáva dojem skutočnej
+   gumovej pečiatky, nie len štítku s orámovaním.
+
+   font-family odkazuje priamo na --font-jetbrains-mono-loaded (nastavenú na
+   <html> v src/app/layout.tsx). */
+.dupe-stamp {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-stamp);
+  color: var(--color-stamp);
+  transform: rotate(-7deg);
+  font-family: var(--font-jetbrains-mono-loaded, ui-monospace), ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.dupe-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--color-stamp);
+  border-radius: inherit;
+  opacity: 0.55;
+}
+
+/* Rám Hero fotky — spodný okraj "odtrhnutý" (zúbkovaný zigzag cez clip-path).
+   box-shadow by tento tvar ignoroval (drží sa pravouhlého boxu), preto tieň
+   rieši .hero-photo-shadow cez filter: drop-shadow, ktorý siluetu rešpektuje. */
+.hero-photo-frame {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 96%,
+    91.67% 100%,
+    83.33% 96%,
+    75% 100%,
+    66.67% 96%,
+    58.33% 100%,
+    50% 96%,
+    41.67% 100%,
+    33.33% 96%,
+    25% 100%,
+    16.67% 96%,
+    8.33% 100%,
+    0% 96%
+  );
+}
+
+.hero-photo-shadow {
+  filter: drop-shadow(0 18px 28px rgba(36, 28, 21, 0.22));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

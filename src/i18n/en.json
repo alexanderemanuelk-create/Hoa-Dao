@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "langLabel": "EN",
+    "htmlLang": "en"
+  },
+  "nav": {
+    "about": "About",
+    "menu": "Menu",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "reviews": "Reviews"
+  },
+  "hero": {
+    "eyebrow": "Welcome",
+    "title": "[BUSINESS NAME]",
+    "subtitle": "[TAGLINE]",
+    "ctaMenu": "View Menu",
+    "ctaReserve": "Reserve a Table"
+  },
+  "about": {
+    "eyebrow": "Our Story",
+    "heading": "Why Choose Us",
+    "paragraph1": "[Short, personal text about the business — two or three sentences about what you do, your philosophy, and what sets you apart. For example: where your ingredients come from, what kind of cuisine you serve, or the atmosphere guests can expect.]",
+    "paragraph2": "[Optional second part of the text — e.g. a short history of the business or an introduction of the chef/owner.]",
+    "imageAlt": "Interior of [BUSINESS NAME]",
+    "features": [
+      {
+        "title": "Fresh Ingredients",
+        "description": "We cook only with quality, fresh ingredients, chosen carefully for both taste and origin.",
+        "cta": "View Menu",
+        "href": "#menu"
+      },
+      {
+        "title": "Welcoming Atmosphere",
+        "description": "A space where you'll feel right at home — perfect for meeting friends or family.",
+        "cta": "See Gallery",
+        "href": "#gallery"
+      },
+      {
+        "title": "Friendly, Fast Service",
+        "description": "Our team makes sure you enjoy a pleasant visit without unnecessary waiting.",
+        "cta": "Contact Us",
+        "href": "#contact"
+      }
+    ]
+  },
+  "visit": {
+    "eyebrow": "Come Visit",
+    "heading": "Visit Us Today",
+    "description": "Stop by for great food and a warm atmosphere — we're happy to welcome you any time during opening hours.",
+    "cta": "Contact & Location",
+    "imageAlt": "Photo of [BUSINESS NAME]"
+  },
+  "menu": {
+    "eyebrow": "Taste",
+    "heading": "Menu",
+    "description": "Our offer changes with the season and the freshness of ingredients.",
+    "fallbackNotice": "We're currently showing a sample menu — the live menu will load shortly.",
+    "priceNotice": "Prices are listed in EUR, VAT included."
+  },
+  "gallery": {
+    "eyebrow": "Take a Look",
+    "heading": "Gallery",
+    "description": "A few shots of the venue, kitchen and atmosphere.",
+    "lightboxClose": "Close",
+    "lightboxNext": "Next photo",
+    "lightboxPrev": "Previous photo"
+  },
+  "reviews": {
+    "eyebrow": "What Guests Say",
+    "heading": "Reviews",
+    "description": "A few words from guests who keep coming back.",
+    "ctaAll": "See All Reviews"
+  },
+  "contact": {
+    "eyebrow": "Visit Us",
+    "heading": "Contact & Location",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "hoursLabel": "Opening Hours",
+    "hours": [
+      { "day": "Monday – Friday", "time": "11:00 AM – 10:00 PM" },
+      { "day": "Saturday", "time": "11:00 AM – 11:00 PM" },
+      { "day": "Sunday", "time": "12:00 PM – 8:00 PM" }
+    ],
+    "directionsCta": "Get Directions",
+    "formHeading": "Send Us a Message",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formMessage": "Message",
+    "formSubmit": "Send Message",
+    "formSending": "Sending…",
+    "formSuccess": "Thank you! Your message has been sent.",
+    "formErrorFallback": "We couldn't send the message automatically. We've opened your email client as a backup — please send it from there.",
+    "formErrorGeneric": "Something went wrong. Please try again, or contact us directly by email.",
+    "formNameRequired": "Please enter your name.",
+    "formEmailInvalid": "Please enter a valid email address.",
+    "formMessageRequired": "Please write your message."
+  },
+  "footer": {
+    "tagline": "[TAGLINE]",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved."
+  },
+  "misc": {
+    "languageSwitcherAria": "Change site language",
+    "skipToContent": "Skip to content"
+  }
+}

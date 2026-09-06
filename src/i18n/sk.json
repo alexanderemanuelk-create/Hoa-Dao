@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "langLabel": "SK",
+    "htmlLang": "sk"
+  },
+  "nav": {
+    "about": "O nás",
+    "menu": "Menu",
+    "gallery": "Galéria",
+    "contact": "Kontakt",
+    "reviews": "Recenzie"
+  },
+  "hero": {
+    "eyebrow": "Vitajte",
+    "title": "[NÁZOV PODNIKU]",
+    "subtitle": "[SLOGAN]",
+    "ctaMenu": "Zobraziť menu",
+    "ctaReserve": "Rezervovať stôl"
+  },
+  "about": {
+    "eyebrow": "Náš príbeh",
+    "heading": "Prečo si vybrať nás",
+    "paragraph1": "[Sem príde krátky, osobný text o podniku — dva alebo tri vety o tom, čo robíte, akú máte filozofiu a čo vás odlišuje. Napríklad: odkiaľ berieme suroviny, akú kuchyňu varíme, alebo aká je atmosféra u nás.]",
+    "paragraph2": "[Voliteľná druhá časť textu — napríklad krátka história podniku alebo predstavenie šéfkuchára/majiteľa.]",
+    "imageAlt": "Interiér podniku [NÁZOV PODNIKU]",
+    "features": [
+      {
+        "title": "Čerstvé suroviny",
+        "description": "Varíme len z kvalitných a čerstvých surovín, ktoré si vyberáme s dôrazom na chuť aj pôvod.",
+        "cta": "Zobraziť menu",
+        "href": "#menu"
+      },
+      {
+        "title": "Príjemná atmosféra",
+        "description": "Priestor, kde sa budete cítiť ako doma — ideálny na stretnutie s priateľmi aj rodinou.",
+        "cta": "Pozrieť galériu",
+        "href": "#gallery"
+      },
+      {
+        "title": "Rýchla a milá obsluha",
+        "description": "Náš tím sa postará o to, aby ste u nás strávili príjemný čas bez zbytočného čakania.",
+        "cta": "Kontaktujte nás",
+        "href": "#contact"
+      }
+    ]
+  },
+  "visit": {
+    "eyebrow": "Poďte na návštevu",
+    "heading": "Navštívte nás",
+    "description": "Zastavte sa u nás na dobré jedlo a príjemnú atmosféru — radi vás privítame kedykoľvek počas otváracích hodín.",
+    "cta": "Kontakt a poloha",
+    "imageAlt": "Fotka prevádzky [NÁZOV PODNIKU]"
+  },
+  "menu": {
+    "eyebrow": "Ochutnajte",
+    "heading": "Menu",
+    "description": "Naša ponuka sa mení podľa sezóny a čerstvosti surovín.",
+    "fallbackNotice": "Momentálne zobrazujeme ukážkové menu — aktuálna ponuka sa čoskoro načíta.",
+    "priceNotice": "Ceny sú uvedené v EUR vrátane DPH."
+  },
+  "gallery": {
+    "eyebrow": "Nahliadnite k nám",
+    "heading": "Galéria",
+    "description": "Pár záberov z prevádzky, kuchyne a atmosféry.",
+    "lightboxClose": "Zavrieť",
+    "lightboxNext": "Ďalšia fotka",
+    "lightboxPrev": "Predošlá fotka"
+  },
+  "reviews": {
+    "eyebrow": "Čo hovoria hostia",
+    "heading": "Recenzie",
+    "description": "Pár slov od návštevníkov, ktorí sa k nám radi vracajú.",
+    "ctaAll": "Zobraziť všetky recenzie"
+  },
+  "contact": {
+    "eyebrow": "Navštívte nás",
+    "heading": "Kontakt a poloha",
+    "addressLabel": "Adresa",
+    "phoneLabel": "Telefón",
+    "emailLabel": "Email",
+    "hoursLabel": "Otváracie hodiny",
+    "hours": [
+      { "day": "Pondelok – Piatok", "time": "11:00 – 22:00" },
+      { "day": "Sobota", "time": "11:00 – 23:00" },
+      { "day": "Nedeľa", "time": "12:00 – 20:00" }
+    ],
+    "directionsCta": "Navigovať",
+    "formHeading": "Napíšte nám",
+    "formName": "Meno",
+    "formEmail": "Email",
+    "formMessage": "Správa",
+    "formSubmit": "Odoslať správu",
+    "formSending": "Odosielam…",
+    "formSuccess": "Ďakujeme! Vaša správa bola odoslaná.",
+    "formErrorFallback": "Správu sa nepodarilo odoslať automaticky. Otvorili sme vám e-mailového klienta ako zálohu — správu prosím odošlite odtiaľ.",
+    "formErrorGeneric": "Nastala chyba. Skúste to prosím znova, alebo nás kontaktujte priamo e-mailom.",
+    "formNameRequired": "Zadajte prosím svoje meno.",
+    "formEmailInvalid": "Zadajte prosím platnú e-mailovú adresu.",
+    "formMessageRequired": "Napíšte prosím vašu správu."
+  },
+  "footer": {
+    "tagline": "[SLOGAN]",
+    "followUs": "Sledujte nás",
+    "rights": "Všetky práva vyhradené."
+  },
+  "misc": {
+    "languageSwitcherAria": "Zmeniť jazyk stránky",
+    "skipToContent": "Preskočiť na obsah"
+  }
+}
