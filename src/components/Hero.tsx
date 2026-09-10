@@ -4,88 +4,89 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import { siteConfig } from "@/config";
-import { heroImage } from "@/data/images";
-import { ArrowIcon, CameraIcon } from "@/components/icons";
+import { heroImage, heroSideImage } from "@/data/images";
+import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { LongArrowIcon } from "@/components/icons";
 
 /**
- * Hero Variantu B — vizuálna identita "kuchynský objednávkový lístok" (dupe
- * pad): papierové pozadie, pečiatkový eyebrow, fotka ako pripnutý odtrhnutý
- * lístok s zúbkovaným okrajom. Dva stĺpce: text vľavo, fotka vpravo (na
- * mobile fotka nad textom).
+ * Hero — fotka (kvitnúca broskyňa) ako pozadie hornej časti stránky, nad ňou
+ * biely text (Times New Roman) v ľavom stĺpci a vpravo fotka na šírku
+ * (heroSideImage v src/data/images.ts).
+ *
+ * Fotka na pozadí sa naspodku plynulo stráca do čiernej.
+ *
+ * Úvodná animácia pri prvom načítaní:
+ *  - názov podniku priletí celý naraz zľava (.hoa-anim-title)
+ *  - ostatné bloky sa zjavia zdola (.hoa-anim-rise)
  */
 export function Hero() {
   const { t } = useLanguage();
 
   return (
-    <section id="top" className="bg-paper">
-      <div className="mx-auto grid max-w-6xl gap-14 px-6 py-16 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-10 lg:py-24">
-        <div className="order-2 flex flex-col gap-6 lg:order-1">
-          {/* Pečiatka namiesto obyčajného eyebrow textu — .dupe-stamp v
-              globals.css (oválny dvojitý rámik, pootočený, strojopisné
-              písmo). */}
-          <span className="dupe-stamp w-fit">{t("hero.eyebrow")}</span>
+    <section id="top" className="relative isolate overflow-hidden bg-black">
+      {heroImage && (
+        <Image
+          src={heroImage}
+          alt={t("about.imageAlt")}
+          fill
+          priority
+          sizes="100vw"
+          className="-z-10 object-cover object-center"
+        />
+      )}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-56 bg-gradient-to-b from-transparent to-black" />
 
-          <h1 className="font-fraunces text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[1] tracking-tight text-ink">
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-10 px-6 py-10 lg:grid-cols-2 lg:px-10">
+        <div className="order-2 flex flex-col gap-7 lg:order-1">
+          <h1 className="hoa-anim-title whitespace-nowrap font-fraunces text-[clamp(2.75rem,8vw,5.75rem)] font-bold uppercase leading-[1] tracking-[0.01em] text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
             {siteConfig.name}
           </h1>
 
-          <p className="max-w-md text-lg leading-relaxed text-ink/70">{t("hero.subtitle")}</p>
+          <p
+            className="hoa-anim-rise max-w-md whitespace-pre-line text-lg leading-relaxed text-white/80"
+            style={{ animationDelay: "0.2s" }}
+          >
+            {t("hero.subtitle")}
+          </p>
 
-          <div className="mt-2 flex flex-wrap items-center gap-4">
-            <a
-              href="#menu"
-              className="inline-flex items-center gap-2 rounded-lg bg-ink px-6 py-3 text-sm font-medium tracking-wide text-paper transition-opacity hover:opacity-90"
+          <div
+            className="hoa-anim-rise mt-2 flex flex-wrap items-center gap-4"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <Link
+              href="/menu"
+              className="group inline-flex items-center gap-3 rounded-full border border-gold/70 bg-black px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-gold/10"
             >
               {t("hero.ctaMenu")}
-            </a>
-            <Link
-              href="/rezervacia"
-              className="group inline-flex items-center gap-1.5 rounded-lg border border-brass bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-ink transition-colors hover:bg-brass/10"
-            >
-              {t("hero.ctaReserve")}
-              <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              <LongArrowIcon className="h-3.5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
 
-        {/* Fotka ako pripnutý, mierne pootočený lístok — rotácia je na tomto
-            vonkajšom, needorezanom wrapperi (aby klip navrchu nebol tiež
-            odrezaný), samotné orezanie zúbkovaného okraja + tieň sú na
-            vnútornom .hero-photo-frame. */}
-        <div className="relative order-1 mx-auto w-full max-w-sm rotate-3 lg:order-2 lg:max-w-none">
-          {/* Klip/štipec hore — dojem, že je fotka pripnutá na nástenku. */}
-          <div className="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="h-3.5 w-14 rounded-full border border-ink/15 bg-brass shadow-sm" />
-            <div className="-mt-1 h-2 w-2 rounded-full bg-brass shadow-inner" />
-          </div>
-
-          <div className="hero-photo-shadow">
-            <div className="hero-photo-frame relative aspect-[4/5] w-full overflow-hidden bg-split-bg-alt">
-              {heroImage ? (
-                <Image
-                  src={heroImage}
-                  alt={t("about.imageAlt")}
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 90vw"
+        {/* Vpravo — „pripnutá" fotka na šírku so zlatou sponkou. Kým
+            heroSideImage nie je nastavená, vykreslí sa zástupný rámik. */}
+        <div
+          className="hoa-anim-rise relative order-1 w-full lg:order-2 lg:justify-self-end"
+          style={{ animationDelay: "0.3s" }}
+        >
+          <div className="relative mx-auto w-full max-w-md rotate-2 lg:max-w-lg">
+            <div className="absolute left-1/2 top-0 z-10 h-3 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
+            <div className="hero-photo-shadow overflow-hidden rounded-sm border border-gold/30 bg-neutral-950">
+              <div className="relative aspect-[4/3] w-full">
+                <PlaceholderImage
+                  src={heroSideImage}
+                  alt={t("hero.sideImageAlt")}
+                  replaceHint="FOTO VEDĽA NÁZVU — nahrajte do /public/images/hero/ a nastavte cestu v src/data/images.ts (heroSideImage)"
+                  sizes="(min-width: 1024px) 40vw, 90vw"
                   priority
-                  className="object-cover"
                 />
-              ) : (
-                // HERO FOTO — nahraďte v /public/images/hero/ a nastavte
-                // cestu v src/data/images.ts (heroImage). Kým fotka nie je
-                // nahratá, zobrazuje sa len tlmená ikona fotoaparátu — žiadny
-                // viditeľný text s cestou k súboru.
-                <div
-                  className="flex h-full w-full items-center justify-center"
-                  title="HERO FOTO — nahraďte v /public/images/hero/ a nastavte cestu v src/data/images.ts (heroImage)"
-                >
-                  <CameraIcon className="h-7 w-7 text-ink opacity-25" />
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </section>
   );
 }

@@ -16,7 +16,7 @@ function openMailtoFallback(name: string, email: string, message: string) {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-split-ink/15 bg-split-bg px-4 py-2.5 text-sm text-split-ink outline-none transition-colors focus:border-split-ink";
+  "w-full rounded-lg border border-gold/25 bg-split-bg px-4 py-2.5 text-sm text-split-ink outline-none transition-colors focus:border-gold";
 const labelClass =
   "mb-1.5 block text-xs font-medium uppercase tracking-widest text-split-ink/50";
 
@@ -126,7 +126,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="mt-2 inline-flex items-center justify-center rounded-full bg-split-accent px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-split-accent/90 disabled:opacity-60"
+        className="mt-2 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition-opacity hover:opacity-90 disabled:opacity-60"
       >
         {status === "sending" ? t("contact.formSending") : t("contact.formSubmit")}
       </button>

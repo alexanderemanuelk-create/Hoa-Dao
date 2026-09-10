@@ -13,16 +13,11 @@ export function Gallery() {
   const active = lightbox.index !== null ? galleryImages[lightbox.index] : null;
 
   return (
-    <section id="gallery" className="border-t border-split-ink/10 bg-split-bg-alt">
-      <div className="mx-auto max-w-6xl px-6 py-20 lg:px-10 lg:py-28">
-        <SectionHeading
-          index="03"
-          eyebrow={t("gallery.eyebrow")}
-          heading={t("gallery.heading")}
-          description={t("gallery.description")}
-        />
+    <section id="gallery" className="bg-split-bg-alt">
+      <div className="mx-auto max-w-6xl px-6 py-10 lg:px-10 lg:py-14">
+        <SectionHeading heading={t("gallery.heading")} description={t("gallery.description")} />
 
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {galleryImages.map((image, i) => {
             const alt = lang === "en" && image.altEn ? image.altEn : image.alt;
             return (
@@ -30,14 +25,14 @@ export function Gallery() {
                 key={image.id}
                 type="button"
                 onClick={() => lightbox.open(i)}
-                className="group relative aspect-square w-full overflow-hidden rounded-xl border border-split-ink/10"
+                className="group relative aspect-square w-full overflow-hidden rounded-xl border border-gold/20"
               >
                 <PlaceholderImage
                   src={image.src}
                   alt={alt}
                   replaceHint="FOTO GALÉRIE — nahraďte v /public/images/gallery/ a nastavte cestu v src/data/gallery.ts"
                   className="transition-transform duration-300 group-hover:scale-105"
-                  sizes="(min-width: 640px) 30vw, 45vw"
+                  sizes="(min-width: 1024px) 24vw, (min-width: 640px) 32vw, 48vw"
                 />
               </button>
             );
@@ -69,12 +64,12 @@ export function Gallery() {
             <ChevronLeftIcon className="h-8 w-8" />
           </button>
 
-          <div className="relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-xl">
+          <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-xl">
             <PlaceholderImage
               src={active.src}
               alt={lang === "en" && active.altEn ? active.altEn : active.alt}
               replaceHint="FOTO GALÉRIE"
-              sizes="90vw"
+              sizes="(min-width: 480px) 28rem, 90vw"
             />
           </div>
 

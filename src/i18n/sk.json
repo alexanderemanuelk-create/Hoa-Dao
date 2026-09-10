@@ -7,22 +7,22 @@
     "about": "O nás",
     "menu": "Menu",
     "gallery": "Galéria",
-    "contact": "Kontakt",
-    "reviews": "Recenzie"
+    "contact": "Kontakt"
   },
   "hero": {
-    "eyebrow": "Vitajte",
-    "title": "[NÁZOV PODNIKU]",
-    "subtitle": "[SLOGAN]",
-    "ctaMenu": "Zobraziť menu",
-    "ctaReserve": "Rezervovať stôl"
+    "eyebrow": "Tradičná vietnamská kuchyňa",
+    "title": "HOA ĐÀO",
+    "subtitle": "Skutočné chute Vietnamu v srdci mesta.\nČerstvé suroviny, tradičné recepty, nezabudnuteľný zážitok.",
+    "scrollHint": "Posúvajte sa",
+    "sideImageAlt": "Sushi misa v HOA ĐÀO",
+    "ctaMenu": "Zobraziť menu"
   },
   "about": {
     "eyebrow": "Náš príbeh",
     "heading": "Prečo si vybrať nás",
     "paragraph1": "[Sem príde krátky, osobný text o podniku — dva alebo tri vety o tom, čo robíte, akú máte filozofiu a čo vás odlišuje. Napríklad: odkiaľ berieme suroviny, akú kuchyňu varíme, alebo aká je atmosféra u nás.]",
     "paragraph2": "[Voliteľná druhá časť textu — napríklad krátka história podniku alebo predstavenie šéfkuchára/majiteľa.]",
-    "imageAlt": "Interiér podniku [NÁZOV PODNIKU]",
+    "imageAlt": "HOA ĐÀO — kvitnúca broskyňa",
     "features": [
       {
         "title": "Čerstvé suroviny",
@@ -56,7 +56,11 @@
     "heading": "Menu",
     "description": "Naša ponuka sa mení podľa sezóny a čerstvosti surovín.",
     "fallbackNotice": "Momentálne zobrazujeme ukážkové menu — aktuálna ponuka sa čoskoro načíta.",
-    "priceNotice": "Ceny sú uvedené v EUR vrátane DPH."
+    "priceNotice": "Ceny sú uvedené v EUR vrátane DPH.",
+    "dailyHeading": "Denné menu",
+    "dailyNote": "Každý deň iné menu — pondelok až piatok. Čerstvé suroviny, tradičné recepty.",
+    "soupLabel": "Polievka",
+    "alacarteHeading": "Stále menu"
   },
   "gallery": {
     "eyebrow": "Nahliadnite k nám",
@@ -66,23 +70,23 @@
     "lightboxNext": "Ďalšia fotka",
     "lightboxPrev": "Predošlá fotka"
   },
-  "reviews": {
-    "eyebrow": "Čo hovoria hostia",
-    "heading": "Recenzie",
-    "description": "Pár slov od návštevníkov, ktorí sa k nám radi vracajú.",
-    "ctaAll": "Zobraziť všetky recenzie"
-  },
   "contact": {
     "eyebrow": "Navštívte nás",
     "heading": "Kontakt a poloha",
+    "intro": "Radi vás privítame osobne alebo nám môžete napísať.",
     "addressLabel": "Adresa",
     "phoneLabel": "Telefón",
+    "callCta": "Kontaktovať",
     "emailLabel": "Email",
     "hoursLabel": "Otváracie hodiny",
     "hours": [
-      { "day": "Pondelok – Piatok", "time": "11:00 – 22:00" },
-      { "day": "Sobota", "time": "11:00 – 23:00" },
-      { "day": "Nedeľa", "time": "12:00 – 20:00" }
+      { "day": "Pondelok", "time": "9:00 – 20:00" },
+      { "day": "Utorok", "time": "9:00 – 20:00" },
+      { "day": "Streda", "time": "9:00 – 20:00" },
+      { "day": "Štvrtok", "time": "9:00 – 20:00" },
+      { "day": "Piatok", "time": "9:00 – 20:00" },
+      { "day": "Sobota", "time": "9:00 – 20:00" },
+      { "day": "Nedeľa", "time": "9:00 – 20:00" }
     ],
     "directionsCta": "Navigovať",
     "formHeading": "Napíšte nám",
@@ -99,7 +103,7 @@
     "formMessageRequired": "Napíšte prosím vašu správu."
   },
   "footer": {
-    "tagline": "[SLOGAN]",
+    "tagline": "HOA ĐÀO — Medza 17, Spišská Nová Ves.",
     "followUs": "Sledujte nás",
     "rights": "Všetky práva vyhradené."
   },

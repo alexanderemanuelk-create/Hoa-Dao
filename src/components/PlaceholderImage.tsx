@@ -50,14 +50,14 @@ export function PlaceholderImage({
     );
   }
 
-  // Neutrálne sivé farby zámerne — placeholder je nenápadný a funguje na
-  // svetlom aj tmavom pozadí.
+  // Tmavý placeholder — splýva s čiernym pozadím stránky, viditeľná je len
+  // jemná ikona fotoaparátu.
   return (
     <div
       title={replaceHint}
-      className={`flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-200 to-neutral-300/60 ${className}`}
+      className={`flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-900 to-black ${className}`}
     >
-      <CameraIcon className="h-8 w-8 text-neutral-500/70" />
+      <CameraIcon className="h-8 w-8 text-white/25" />
     </div>
   );
 }

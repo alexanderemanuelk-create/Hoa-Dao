@@ -23,21 +23,29 @@
  *       - mosadz:  #b08d57 (čiary, klip, sekundárne detaily)
  * ============================================================================ */
 @theme {
-  /* Základná paleta stránky. */
-  --color-split-bg: #fcd7ad;
-  --color-split-bg-alt: #ffffff;
-  --color-split-ink: #413620;
-  --color-split-accent: #7a4a2f;
+  /* Paleta: čierne pozadie (ponechané), biely text (Times New Roman),
+     ružový hlavný akcent + jemné zlaté linky. */
+  /* Všetko rovnako čierne — žiadne viditeľné prechody medzi sekciami. */
+  --color-split-bg: #000000;
+  --color-split-bg-alt: #000000;
+  --color-split-ink: #ffffff;
 
-  /* Identita "kuchynský objednávkový lístok" — hlavička + Hero. */
-  --color-paper: #f7f3ea;
-  --color-ink: #241c15;
-  --color-stamp: #a8342a;
-  --color-brass: #b08d57;
+  /* Hlavný akcent — ružová: tlačidlá, aktívne stavy, hviezdičky. */
+  --color-split-accent: #efb9bb;
+  --color-accent: #efb9bb;
 
-  /* Fonty (Google Fonts, načítané v src/app/layout.tsx cez next/font). */
-  --font-fraunces: var(--font-fraunces-loaded);
-  --font-inter: var(--font-inter-loaded);
+  /* Jemný zlatý / béžový akcent — vlasové linky, rámiky, sponka na fotke,
+     čiarka pred nadpisom sekcie. */
+  --color-gold: #c9a26a;
+
+  --color-paper: #000000;
+  --color-ink: #ffffff;
+  --color-stamp: #efb9bb;
+  --color-brass: #c9a26a;
+
+  /* Fonty — všade Times New Roman. */
+  --font-fraunces: "Times New Roman", Times, serif;
+  --font-inter: "Times New Roman", Times, serif;
 
   --animate-fade-in: fade-in 0.5s ease-out;
 
@@ -58,8 +66,53 @@ html {
 }
 
 body {
-  background: var(--color-split-bg-alt);
-  color: var(--color-split-ink);
+  background: #000000;
+  color: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* ============================================================================
+ * Úvodná animácia (prvé načítanie stránky) — src/components/Hero.tsx
+ * ============================================================================
+ * .hoa-anim-title — názov podniku priletí rýchlo, celý naraz, zľava.
+ * .hoa-anim-rise  — bloky pod ním sa zjavia zdola (so stupňovaným oneskorením
+ *                   cez inline style={{ animationDelay }}).
+ * Pri prefers-reduced-motion sa animácie vypnú (blok nižšie). */
+@keyframes hoa-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hoa-rise-up {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hoa-anim-title {
+  animation: hoa-slide-in-left 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hoa-anim-rise {
+  animation: hoa-rise-up 1.15s ease-out both;
 }
 
 /* Odsadenie pre sticky header pri skoku na kotvu (výška h-16 = 4rem).

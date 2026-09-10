@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/i18n/LanguageProvider";
-import { InstagramIcon, FacebookIcon, PinIcon, PhoneIcon, MailIcon, ClockIcon, ArrowIcon } from "@/components/icons";
+import { InstagramIcon, FacebookIcon, PinIcon, PhoneIcon, ClockIcon, LongArrowIcon } from "@/components/icons";
 import { ContactForm } from "@/components/ContactForm";
 import { siteConfig } from "@/config";
 
@@ -12,9 +12,6 @@ import { siteConfig } from "@/config";
 // presunutá priamo sem — id="contact" tu prevzalo miesto po pôvodnej
 // <section id="contact">, takže odkaz "Kontakt" v navigácii funguje bez zmeny
 // (viď :is(section, footer)[id] v src/app/globals.css).
-//
-// Tmavé pozadie (--color-split-ink) je zámerné — po sérii svetlých sekcií
-// dáva stránke jasný, čitateľný záver.
 export function Footer() {
   const { t, dict } = useLanguage();
   const year = new Date().getFullYear();
@@ -26,87 +23,95 @@ export function Footer() {
   ].filter((s): s is { href: string; Icon: typeof InstagramIcon; label: string } => Boolean(s.href));
 
   return (
-    <footer id="contact" className="border-t border-split-ink/10 bg-split-ink text-split-bg/80">
-      <div className="mx-auto max-w-6xl px-6 py-16 lg:px-10 lg:py-20">
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-split-bg/50">
-          05 — {t("contact.eyebrow")}
-        </span>
-        <h2 className="mt-3 font-fraunces text-3xl font-medium text-split-bg sm:text-4xl">
+    <footer id="contact" className="bg-black text-white/80">
+      <div className="mx-auto max-w-6xl px-6 pt-10 pb-12 lg:px-10 lg:pt-12 lg:pb-16">
+        <h2 className="text-center font-fraunces text-3xl font-medium text-white sm:text-4xl">
           {t("contact.heading")}
         </h2>
+        <p className="mx-auto mt-3 max-w-md text-center text-sm leading-relaxed text-white/60">
+          {t("contact.intro")}
+        </p>
 
-        <div className={`mt-10 grid gap-10 ${showForm ? "lg:grid-cols-2 lg:gap-16" : ""}`}>
-          <div className="flex flex-col gap-6">
-            <dl className="flex flex-col gap-3 text-sm">
-              <div className="flex items-start gap-3">
-                <PinIcon className="mt-0.5 h-4 w-4 shrink-0 text-split-bg/50" />
-                <dd>{siteConfig.contact.address}</dd>
+        <div className="mx-auto mt-10 grid max-w-3xl gap-10 sm:grid-cols-2 sm:gap-16">
+          <div className="flex flex-col gap-7">
+            <div>
+              <div className="flex items-center gap-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/45">
+                <PinIcon className="h-4 w-4" />
+                {t("contact.addressLabel")}
               </div>
-              <div className="flex items-start gap-3">
-                <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0 text-split-bg/50" />
-                <dd>
-                  <a href={`tel:${siteConfig.contact.phoneHref}`} className="hover:text-split-bg">
-                    {siteConfig.contact.phone}
-                  </a>
-                </dd>
+              <p className="mt-2 text-sm text-white/85">{siteConfig.contact.address}</p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/45">
+                <PhoneIcon className="h-4 w-4" />
+                {t("contact.phoneLabel")}
               </div>
-              <div className="flex items-start gap-3">
-                <MailIcon className="mt-0.5 h-4 w-4 shrink-0 text-split-bg/50" />
-                <dd>
-                  <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-split-bg">
-                    {siteConfig.contact.email}
-                  </a>
-                </dd>
-              </div>
-              <div className="flex items-start gap-3">
-                <ClockIcon className="mt-0.5 h-4 w-4 shrink-0 text-split-bg/50" />
-                <dd className="flex flex-col gap-0.5">
-                  {dict.contact.hours.map((row) => (
-                    <span key={row.day}>
-                      {row.day}: {row.time}
-                    </span>
-                  ))}
-                </dd>
-              </div>
+              <p className="mt-2 text-sm text-white/85">
+                <a href={`tel:${siteConfig.contact.phoneHref}`} className="hover:text-white">
+                  {siteConfig.contact.phone}
+                </a>
+              </p>
+              {/* Na mobile otvorí telefónnu appku s predvoleným číslom. */}
+              <a
+                href={`tel:${siteConfig.contact.phoneHref}`}
+                className="group mt-4 inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition-opacity hover:opacity-90"
+              >
+                <PhoneIcon className="h-3.5 w-3.5" />
+                {t("contact.callCta")}
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/45">
+              <ClockIcon className="h-4 w-4" />
+              {t("contact.hoursLabel")}
+            </div>
+            <dl className="mt-3 flex max-w-[16rem] flex-col gap-1.5 text-sm">
+              {dict.contact.hours.map((row) => (
+                <div key={row.day} className="flex items-baseline justify-between gap-6">
+                  <dt className="text-white/85">{row.day}</dt>
+                  <dd className="tabular-nums text-white/60">{row.time}</dd>
+                </div>
+              ))}
             </dl>
+          </div>
+        </div>
 
+        {showMap && (
+          <div className="mt-10 flex flex-col gap-4">
+            <div className="aspect-[21/9] w-full overflow-hidden rounded-xl border border-gold/20">
+              <iframe
+                src={siteConfig.mapsEmbedUrl}
+                title={`${t("contact.heading")} — ${siteConfig.name}`}
+                className="h-full w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
             <a
               href={siteConfig.mapsDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-fit items-center gap-1.5 text-xs font-medium tracking-wide text-split-bg underline-offset-4 hover:underline"
+              className="group mx-auto inline-flex w-full items-center justify-center gap-3 rounded-full bg-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-black transition-opacity hover:opacity-90 sm:w-fit"
             >
               {t("contact.directionsCta")}
-              <ArrowIcon className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+              <LongArrowIcon className="h-3.5 w-5 transition-transform group-hover:translate-x-1" />
             </a>
-
-            {showMap && (
-              <div className="aspect-[21/9] w-full overflow-hidden rounded-xl">
-                <iframe
-                  src={siteConfig.mapsEmbedUrl}
-                  title={`${t("contact.heading")} — ${siteConfig.name}`}
-                  className="h-full w-full grayscale-[15%]"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            )}
           </div>
+        )}
 
-          {showForm && (
-            <div className="rounded-2xl bg-split-bg-alt p-6 text-split-ink lg:p-8">
-              <h3 className="font-fraunces text-lg font-medium text-split-ink">
-                {t("contact.formHeading")}
-              </h3>
-              <ContactForm />
-            </div>
-          )}
-        </div>
+        {showForm && (
+          <div className="mx-auto mt-10 max-w-2xl rounded-2xl bg-split-bg-alt p-6 text-white lg:p-8">
+            <h3 className="font-fraunces text-lg font-medium text-white">
+              {t("contact.formHeading")}
+            </h3>
+            <ContactForm />
+          </div>
+        )}
       </div>
 
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 border-t border-split-bg/10 px-6 py-10 text-center lg:px-10">
-        <p className="max-w-sm text-sm leading-relaxed text-split-bg/60">{t("footer.tagline")}</p>
-
+      <div className="flex flex-col items-center gap-3 border-t border-gold/15 px-6 py-6 text-center text-xs text-white/40 lg:px-10">
         {socialLinks.length > 0 && (
           <div className="flex items-center gap-4">
             {socialLinks.map(({ href, Icon, label }) => (
@@ -116,16 +121,13 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-split-bg/70 transition-colors hover:text-split-bg"
+                className="text-white/70 transition-colors hover:text-white"
               >
                 <Icon className="h-5 w-5" />
               </a>
             ))}
           </div>
         )}
-      </div>
-
-      <div className="flex flex-col items-center gap-2 border-t border-split-bg/10 px-6 py-5 text-center text-xs text-split-bg/40 lg:px-10">
         <span>
           © {year} {siteConfig.name} — {t("footer.rights")}
         </span>

@@ -18,29 +18,35 @@ export const siteConfig = {
    * Názov podniku. Zobrazuje sa v hlavičke, footeri a v <title> stránky.
    * Business meno sa zvyčajne neprekladá, preto je spoločné pre SK aj EN.
    */
-  name: "[NÁZOV PODNIKU]",
+  name: "HOA ĐÀO",
 
   /**
    * Krátky popis pre <meta name="description"> (SEO) — nezávislý od jazyka
    * verzie zobrazenej v Hero sekcii (tá je v src/i18n/*.json).
    */
-  metaDescription: "[KRÁTKY POPIS PODNIKU PRE VYHĽADÁVAČE]",
+  metaDescription: "HOA ĐÀO — Medza 17, Spišská Nová Ves. Otvorené denne 9:00 – 20:00.",
 
   contact: {
-    address: "[ADRESA, MESTO]",
-    phone: "[TELEFÓN]",
+    address: "Medza 17, 052 01 Spišská Nová Ves",
+    phone: "0910 806 608",
     /** Formát pre tel: odkaz, napr. "+421900123456" (bez medzier). */
-    phoneHref: "+421900123456",
+    phoneHref: "+421910806608",
     email: "[EMAIL]",
   },
 
   /**
    * Odkazy na sociálne siete. Ak klient daný kanál nemá, nastav hodnotu na
-   * `null` — odkaz sa vo Footeri/Kontakte automaticky nezobrazí.
+   * `null` — ikona sa vo Footeri automaticky nezobrazí.
+   *
+   * HOA ĐÀO zatiaľ nemá vlastný Instagram, preto obe ikony (Instagram aj
+   * Facebook) zámerne vedú na Facebook stránku. Keď pribudne Instagram,
+   * vlož jeho URL sem.
    */
   social: {
-    instagram: "https://instagram.com/[NAZOV_UCTU]" as string | null,
-    facebook: "https://facebook.com/[NAZOV_STRANKY]" as string | null,
+    instagram:
+      "https://www.facebook.com/people/HOA-%C4%90%C3%80O/61591630571888/" as string | null,
+    facebook:
+      "https://www.facebook.com/people/HOA-%C4%90%C3%80O/61591630571888/" as string | null,
   },
 
   /**
@@ -50,27 +56,15 @@ export const siteConfig = {
    * Slovensko bez pripnutého markera — NIE odkaz na konkrétnu skutočnú
    * firmu/miesto, aby demo verzia nezavádzala.
    */
-  mapsEmbedUrl: "https://maps.google.com/maps?q=Slovensko&z=7&output=embed",
+  mapsEmbedUrl:
+    "https://maps.google.com/maps?q=Medza%2017%2C%20052%2001%20Spi%C5%A1sk%C3%A1%20Nov%C3%A1%20Ves&z=16&output=embed",
 
   /**
    * URL Google Maps na tlačidlo "Navigovať" (bežný odkaz na mapy.google.com,
    * nie embed). Otvorí sa v novej karte / v mobilnej appke Google Maps.
    */
-  mapsDirectionsUrl: "https://maps.google.com/?q=[ADRESA,+MESTO]",
-
-  /**
-   * ==========================================================================
-   * REZERVÁCIE A RECENZIE — presmerovania
-   * ==========================================================================
-   * Tlačidlo "Rezervovať stôl" a odkaz na recenzie nevedú priamo na externú
-   * službu, ale na interné cesty /rezervacia a /recenzie (viď
-   * src/app/rezervacia/page.tsx a src/app/recenzie/page.tsx), ktoré na tieto
-   * URL adresy presmerujú. Vďaka tomu môže klient mať tento odkaz vytlačený
-   * napr. na vizitkách/menu a platformu neskôr zmeniť len tu, bez nutnosti
-   * meniť tlačené materiály.
-   */
-  reservationUrl: "https://widget.priklad-rezervacneho-systemu.sk/[NAZOV_PODNIKU]",
-  reviewsUrl: "https://g.page/r/[GOOGLE_PLACE_ID]/review",
+  mapsDirectionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=Medza%2017%2C%20052%2001%20Spi%C5%A1sk%C3%A1%20Nov%C3%A1%20Ves",
 
   /**
    * ==========================================================================
@@ -128,11 +122,10 @@ export const siteConfig = {
    */
   sections: {
     hero: true,
-    about: true,
+    about: false,
     menu: true,
     gallery: true,
-    reviews: true,
-    contactForm: true,
+    contactForm: false,
     map: true,
   },
 } as const;

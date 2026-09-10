@@ -87,6 +87,23 @@ export function ArrowIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+export function LongArrowIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" strokeWidth={1.4} {...props}>
+      <path d="M2 12h26M20 5l8 7-8 7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function MouseIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.3} {...props}>
+      <rect x="7.5" y="3" width="9" height="16" rx="4.5" />
+      <path d="M12 6.5v3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function LoginIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} {...props}>
