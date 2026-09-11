@@ -4,14 +4,70 @@ import { useLanguage } from "@/i18n/LanguageProvider";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { dailyMenu } from "@/data/daily-menu";
 import { alacarteCategoryPhotos } from "@/data/menu-photos";
-import type { MenuCategory, MenuSource } from "@/types/menu";
+import type { MenuCategory, MenuItem, MenuSource } from "@/types/menu";
 
 interface MenuProps {
   categories: MenuCategory[];
-  source: MenuSource;
+  /** Ponechané pre kompatibilitu s /menu stránkou; momentálne sa nepoužíva. */
+  source?: MenuSource;
 }
 
-export function Menu({ categories, source }: MenuProps) {
+/** Riadok jednej à la carte položky – číslo, názov, hmotnosť, alergény,
+ *  popis a buď jedna cena, alebo zoznam variantov s cenami. */
+function AlacarteItem({ item, lang }: { item: MenuItem; lang: "sk" | "en" }) {
+  const name = lang === "en" && item.nameEn ? item.nameEn : item.name;
+  const description =
+    lang === "en" && item.descriptionEn ? item.descriptionEn : item.description;
+
+  return (
+    <li>
+      <div className="flex items-baseline gap-3">
+        {item.number && (
+          <span className="shrink-0 text-sm text-split-ink/40 tabular-nums">{item.number}.</span>
+        )}
+        <span className="font-medium text-split-ink">
+          {name}
+          {item.spicy && <span aria-label="pikantné"> 🌶</span>}
+          {item.weight && (
+            <span className="ml-2 text-xs font-normal text-split-ink/40">{item.weight}</span>
+          )}
+          {item.allergens && (
+            <span className="ml-1.5 text-xs font-normal text-split-ink/35">({item.allergens})</span>
+          )}
+        </span>
+        {item.price && (
+          <>
+            <span aria-hidden className="h-px flex-1 bg-split-ink/15" />
+            <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
+              {item.price}
+            </span>
+          </>
+        )}
+      </div>
+
+      {description && (
+        <p className="mt-1 text-sm leading-relaxed text-split-ink/55">{description}</p>
+      )}
+
+      {item.variants && item.variants.length > 0 && (
+        <ul className="mt-2 flex flex-col gap-1">
+          {item.variants.map((v, i) => (
+            <li key={i} className="flex items-baseline gap-3 text-sm">
+              <span className="text-split-ink/75">
+                {lang === "en" && v.labelEn ? v.labelEn : v.label}
+                {v.spicy && <span aria-label="pikantné"> 🌶</span>}
+              </span>
+              <span aria-hidden className="h-px flex-1 bg-split-ink/10" />
+              <span className="shrink-0 whitespace-nowrap text-split-ink/90">{v.price}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+export function Menu({ categories }: MenuProps) {
   const { t, lang } = useLanguage();
 
   return (
@@ -37,14 +93,9 @@ export function Menu({ categories, source }: MenuProps) {
                   key={day.day}
                   className="rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8"
                 >
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                    <h4 className="font-fraunces text-xl font-medium uppercase tracking-[0.08em] text-split-ink">
-                      {dayName}
-                    </h4>
-                    <span className="text-sm text-split-ink/60">
-                      {t("menu.soupLabel")}: {day.soup}
-                    </span>
-                  </div>
+                  <h4 className="font-fraunces text-xl font-medium uppercase tracking-[0.08em] text-split-ink">
+                    {dayName}
+                  </h4>
                   <div className="mt-3 mb-5 h-px w-10 bg-split-accent" />
 
                   <ol className="flex flex-col gap-3.5">
@@ -69,26 +120,45 @@ export function Menu({ categories, source }: MenuProps) {
         </div>
 
         {/* ---------------------------------------------------------------- */}
-        {/* STÁLE MENU (à la carte) — z Google Sheets / ukážkových dát.       */}
+        {/* STÁLE MENU (à la carte) — z Google Sheets / dát v projekte.       */}
         {/* Fotky ku kategóriám (striedavo vľavo/vpravo): src/data/menu-photos.ts */}
         {/* ---------------------------------------------------------------- */}
         <h3 className="mt-16 text-center font-fraunces text-2xl font-medium tracking-tight text-split-ink sm:text-3xl">
           {t("menu.alacarteHeading")}
         </h3>
 
-        {source === "fallback" && (
-          <p className="mt-3 text-center text-xs italic tracking-wide text-split-ink/50">
-            {t("menu.fallbackNotice")}
-          </p>
-        )}
-
         <div className="mt-8 flex flex-col gap-8">
           {categories.map((category, idx) => {
             const categoryName =
               lang === "en" && category.categoryEn ? category.categoryEn : category.category;
-            // Fotky sa striedajú: párna kategória fotka vľavo, nepárna vpravo.
+            const photo = alacarteCategoryPhotos[category.category] ?? null;
             const photoRight = idx % 2 === 1;
-            const photo = alacarteCategoryPhotos[idx] ?? null;
+
+            const card = (
+              <div className="flex-1 rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8">
+                <h4 className="font-fraunces text-2xl font-medium tracking-tight text-split-ink">
+                  {categoryName}
+                </h4>
+                <div className="mt-3 h-px w-10 bg-split-accent" />
+                {category.note && (
+                  <p className="mt-3 text-sm leading-relaxed text-split-ink/50">{category.note}</p>
+                )}
+
+                <ul className="mt-6 flex flex-col gap-6">
+                  {category.items.map((item, i) => (
+                    <AlacarteItem key={`${category.category}-${i}`} item={item} lang={lang} />
+                  ))}
+                </ul>
+              </div>
+            );
+
+            if (!photo) {
+              return (
+                <div key={category.category} className="flex">
+                  {card}
+                </div>
+              );
+            }
 
             return (
               <div
@@ -102,45 +172,12 @@ export function Menu({ categories, source }: MenuProps) {
                     <PlaceholderImage
                       src={photo}
                       alt={categoryName}
-                      replaceHint="FOTO KU KATEGÓRII — nahrajte do /public/images/menu/ a nastavte cestu v src/data/menu-photos.ts"
+                      replaceHint="FOTO KU KATEGÓRII — nastavte cestu v src/data/menu-photos.ts"
                       sizes="(min-width: 1024px) 20rem, 100vw"
                     />
                   </div>
                 </div>
-
-                <div className="flex-1 rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8">
-                  <h4 className="font-fraunces text-2xl font-medium tracking-tight text-split-ink">
-                    {categoryName}
-                  </h4>
-                  <div className="mt-3 mb-6 h-px w-10 bg-split-accent" />
-
-                  <ul className="flex flex-col gap-6">
-                    {category.items.map((item) => {
-                      const name = lang === "en" && item.nameEn ? item.nameEn : item.name;
-                      const description =
-                        lang === "en" && item.descriptionEn
-                          ? item.descriptionEn
-                          : item.description;
-
-                      return (
-                        <li key={`${category.category}-${item.name}`}>
-                          <div className="flex items-baseline gap-3">
-                            <span className="font-medium text-split-ink">{name}</span>
-                            <span aria-hidden className="h-px flex-1 bg-split-ink/15" />
-                            <span className="whitespace-nowrap font-medium text-split-ink">
-                              {item.price}
-                            </span>
-                          </div>
-                          {description && (
-                            <p className="mt-1 text-sm leading-relaxed text-split-ink/60">
-                              {description}
-                            </p>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+                {card}
               </div>
             );
           })}

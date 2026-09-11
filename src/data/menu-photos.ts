@@ -1,16 +1,15 @@
 /**
  * FOTKY KU KATEGÓRIÁM STÁLEHO MENU (à la carte) na stránke /menu.
  * ============================================================================
- * Zobrazujú sa vedľa kariet kategórií, striedavo vľavo/vpravo. Poradie
- * v poli zodpovedá poradiu kategórií v menu (1. položka = 1. kategória …).
+ * Kľúč = presný názov kategórie zo src/data/fallback-menu.ts (`category`).
+ * Hodnota = cesta k fotke v /public/images/menu/ (napr. "/images/menu/predjedla.jpg",
+ * ideálne na šírku ~1200 px).
  *
- * `null` = jemný zástupný rámik (miesto je pripravené, stačí doplniť).
- * Fotku nahraj do /public/images/menu/ (ideálne na šírku ~1200 px) a sem
- * vlož cestu, napr. "/images/menu/predjedla.jpg".
+ * Kategórie bez záznamu tu sa zobrazia bez fotky (na celú šírku). Kategórie
+ * so záznamom majú fotku striedavo vľavo/vpravo.
  */
-export const alacarteCategoryPhotos: (string | null)[] = [
-  null,
-  null,
-  null,
-  null,
-];
+export const alacarteCategoryPhotos: Record<string, string> = {
+  // "Predjedlá": "/images/menu/predjedla.jpg",
+  // "Hlavné jedlá": "/images/menu/hlavne-jedla.jpg",
+  // "Sushi rolky (8 ks)": "/images/menu/sushi.jpg",
+};
