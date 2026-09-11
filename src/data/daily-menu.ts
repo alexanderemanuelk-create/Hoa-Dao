@@ -1,24 +1,14 @@
+import type { DailyMenuDay } from "@/types/menu";
+
 /**
- * DENNÉ MENU (pondelok – piatok)
+ * PREDVOLENÉ (záložné) DENNÉ MENU — prepísané z oficiálneho PDF jedálneho
+ * lístka HOA ĐÀO (strana „Denné Menu").
  * ============================================================================
- * Prepísané z oficiálneho PDF jedálneho lístka HOA ĐÀO (strana „Denné Menu").
- * Zobrazuje sa v sekcii Menu na stránke /menu (src/components/Menu.tsx).
- * Názvy jedál sú spoločné pre SK aj EN.
+ * Živé denné menu sa normálne ťahá z Google Sheets (src/lib/menu.ts,
+ * `getDailyMenu()`). Toto pole sa použije len vtedy, keď sa CSV nepodarí
+ * stiahnuť alebo je prázdne — stránka /menu tak nikdy nie je prázdna ani
+ * rozbitá. Pokojne tu obsah udržuj aktuálny ako druhú poistku.
  */
-
-export interface DailyMenuItem {
-  name: string;
-  price: string;
-  /** Pikantné jedlo — vedľa názvu sa zobrazí 🌶 */
-  spicy?: boolean;
-}
-
-export interface DailyMenuDay {
-  day: string;
-  dayEn: string;
-  items: DailyMenuItem[];
-}
-
 export const dailyMenu: DailyMenuDay[] = [
   {
     day: "Pondelok",

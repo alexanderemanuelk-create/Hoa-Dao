@@ -1,80 +1,96 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageProvider";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
-import { dailyMenu } from "@/data/daily-menu";
 import { alacarteCategoryPhotos } from "@/data/menu-photos";
-import type { MenuCategory, MenuItem, MenuSource } from "@/types/menu";
+import type { DailyMenuDay, MenuCategory, MenuItem, MenuSource } from "@/types/menu";
 
 interface MenuProps {
   categories: MenuCategory[];
-  /** Ponechané pre kompatibilitu s /menu stránkou; momentálne sa nepoužíva. */
+  dailyMenu: DailyMenuDay[];
+  /** Ponechané pre prípadné budúce použitie (napr. odznak "naživo"/"predvolené"). */
   source?: MenuSource;
+  dailySource?: MenuSource;
 }
 
-/** Riadok jednej à la carte položky – číslo, názov, hmotnosť, alergény,
- *  popis a buď jedna cena, alebo zoznam variantov s cenami. */
+/** Riadok jednej à la carte položky – voliteľná fotka, číslo, názov,
+ *  hmotnosť, alergény, popis a buď jedna cena, alebo zoznam variantov. */
 function AlacarteItem({ item, lang }: { item: MenuItem; lang: "sk" | "en" }) {
   const name = lang === "en" && item.nameEn ? item.nameEn : item.name;
   const description =
     lang === "en" && item.descriptionEn ? item.descriptionEn : item.description;
 
   return (
-    <li>
-      <div className="flex items-baseline gap-3">
-        {item.number && (
-          <span className="shrink-0 text-sm text-split-ink/40 tabular-nums">{item.number}.</span>
+    <li className="flex gap-4">
+      {item.photo && (
+        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-gold/20 sm:h-16 sm:w-16">
+          <Image
+            src={`/images/menu/${item.photo}`}
+            alt={name}
+            fill
+            sizes="64px"
+            className="object-cover"
+          />
+        </div>
+      )}
+
+      <div className="flex-1">
+        <div className="flex items-baseline gap-3">
+          {item.number && (
+            <span className="shrink-0 text-sm text-split-ink/40 tabular-nums">{item.number}.</span>
+          )}
+          <span className="font-medium text-split-ink">
+            {name}
+            {item.spicy && <span aria-label="pikantné"> 🌶</span>}
+            {item.weight && (
+              <span className="ml-2 text-xs font-normal text-split-ink/40">{item.weight}</span>
+            )}
+            {item.allergens && (
+              <span className="ml-1.5 text-xs font-normal text-split-ink/35">({item.allergens})</span>
+            )}
+          </span>
+          {item.price && (
+            <>
+              <span aria-hidden className="h-px flex-1 bg-split-ink/15" />
+              <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
+                {item.price}
+              </span>
+            </>
+          )}
+        </div>
+
+        {description && (
+          <p className="mt-1 text-sm leading-relaxed text-split-ink/55">{description}</p>
         )}
-        <span className="font-medium text-split-ink">
-          {name}
-          {item.spicy && <span aria-label="pikantné"> 🌶</span>}
-          {item.weight && (
-            <span className="ml-2 text-xs font-normal text-split-ink/40">{item.weight}</span>
-          )}
-          {item.allergens && (
-            <span className="ml-1.5 text-xs font-normal text-split-ink/35">({item.allergens})</span>
-          )}
-        </span>
-        {item.price && (
-          <>
-            <span aria-hidden className="h-px flex-1 bg-split-ink/15" />
-            <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
-              {item.price}
-            </span>
-          </>
+
+        {item.variants && item.variants.length > 0 && (
+          <ul className="mt-2 flex flex-col gap-1">
+            {item.variants.map((v, i) => (
+              <li key={i} className="flex items-baseline gap-3 text-sm">
+                <span className="text-split-ink/75">
+                  {lang === "en" && v.labelEn ? v.labelEn : v.label}
+                  {v.spicy && <span aria-label="pikantné"> 🌶</span>}
+                </span>
+                <span aria-hidden className="h-px flex-1 bg-split-ink/10" />
+                <span className="shrink-0 whitespace-nowrap text-split-ink/90">{v.price}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
-
-      {description && (
-        <p className="mt-1 text-sm leading-relaxed text-split-ink/55">{description}</p>
-      )}
-
-      {item.variants && item.variants.length > 0 && (
-        <ul className="mt-2 flex flex-col gap-1">
-          {item.variants.map((v, i) => (
-            <li key={i} className="flex items-baseline gap-3 text-sm">
-              <span className="text-split-ink/75">
-                {lang === "en" && v.labelEn ? v.labelEn : v.label}
-                {v.spicy && <span aria-label="pikantné"> 🌶</span>}
-              </span>
-              <span aria-hidden className="h-px flex-1 bg-split-ink/10" />
-              <span className="shrink-0 whitespace-nowrap text-split-ink/90">{v.price}</span>
-            </li>
-          ))}
-        </ul>
-      )}
     </li>
   );
 }
 
-export function Menu({ categories }: MenuProps) {
+export function Menu({ categories, dailyMenu }: MenuProps) {
   const { t, lang } = useLanguage();
 
   return (
     <section id="menu" className="bg-split-bg">
       <div className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:px-10 lg:pt-16 lg:pb-10">
         {/* ---------------------------------------------------------------- */}
-        {/* DENNÉ MENU — obsah v src/data/daily-menu.ts                       */}
+        {/* DENNÉ MENU — naživo z Google Sheets (src/lib/menu.ts, getDailyMenu) */}
         {/* ---------------------------------------------------------------- */}
         <div>
           <h3 className="text-center font-fraunces text-2xl font-medium tracking-tight text-split-ink sm:text-3xl">
@@ -100,16 +116,23 @@ export function Menu({ categories }: MenuProps) {
 
                   <ol className="flex flex-col gap-3.5">
                     {day.items.map((item, i) => (
-                      <li key={i} className="flex items-baseline gap-3">
-                        <span className="shrink-0 text-split-ink/40 tabular-nums">{i + 1}.</span>
-                        <span className="font-medium text-split-ink">
-                          {item.name}
-                          {item.spicy && <span aria-label="pikantné"> 🌶</span>}
-                        </span>
-                        <span aria-hidden className="h-px min-w-6 flex-1 bg-split-ink/15" />
-                        <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
-                          {item.price}
-                        </span>
+                      <li key={i}>
+                        <div className="flex items-baseline gap-3">
+                          <span className="shrink-0 text-split-ink/40 tabular-nums">{i + 1}.</span>
+                          <span className="font-medium text-split-ink">
+                            {item.name}
+                            {item.spicy && <span aria-label="pikantné"> 🌶</span>}
+                          </span>
+                          <span aria-hidden className="h-px min-w-6 flex-1 bg-split-ink/15" />
+                          <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
+                            {item.price}
+                          </span>
+                        </div>
+                        {item.description && (
+                          <p className="mt-1 text-sm leading-relaxed text-split-ink/55">
+                            {item.description}
+                          </p>
+                        )}
                       </li>
                     ))}
                   </ol>
@@ -120,7 +143,7 @@ export function Menu({ categories }: MenuProps) {
         </div>
 
         {/* ---------------------------------------------------------------- */}
-        {/* STÁLE MENU (à la carte) — z Google Sheets / dát v projekte.       */}
+        {/* STÁLE MENU — naživo z Google Sheets (src/lib/menu.ts, getMenu).   */}
         {/* Fotky ku kategóriám (striedavo vľavo/vpravo): src/data/menu-photos.ts */}
         {/* ---------------------------------------------------------------- */}
         <h3 className="mt-16 text-center font-fraunces text-2xl font-medium tracking-tight text-split-ink sm:text-3xl">

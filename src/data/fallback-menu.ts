@@ -1,11 +1,12 @@
 import type { MenuCategory } from "@/types/menu";
 
 /**
- * JEDÁLNY LÍSTOK HOA ĐÀO
+ * PREDVOLENÝ (záložný) JEDÁLNY LÍSTOK HOA ĐÀO
  * ============================================================================
- * Prepísané z oficiálneho PDF jedálneho lístka. Toto sú „fallback" dáta, ktoré
- * sa zobrazujú v sekcii Menu, ak nie je nastavené napojenie na Google Sheets
- * (MENU_SHEET_CSV_URL v .env). Upravuje sa priamo tu.
+ * Prepísané z oficiálneho PDF jedálneho lístka. Živé stále menu sa normálne
+ * ťahá naživo z Google Sheets (src/lib/menu.ts, `getMenu()`) — toto pole sa
+ * použije len vtedy, keď sa CSV nepodarí stiahnuť alebo je prázdne, takže
+ * stránka /menu nikdy nie je prázdna ani rozbitá.
  *
  * Položky s viacerými cenami (druh mäsa / príchuť) používajú pole `variants`.
  * Alergény: 1 lepok · 2 kôrovce · 3 vajcia · 4 ryby · 5 arašidy · 6 sója ·

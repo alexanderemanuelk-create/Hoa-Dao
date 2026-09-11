@@ -68,25 +68,42 @@ export const siteConfig = {
 
   /**
    * ==========================================================================
-   * GOOGLE SHEETS — zdroj dát pre Menu sekciu
+   * GOOGLE SHEETS — živý zdroj dát pre sekciu Menu
    * ==========================================================================
-   * Skutočná URL sa nastavuje cez premennú prostredia MENU_SHEET_CSV_URL
-   * (viď .env.example), nie tu — aby sa dala meniť bez zásahu do kódu a bez
-   * nutnosti commitovať citlivé/klientske hodnoty.
+   * Denné aj stále menu sa naživo ťahajú z dvoch verejne publikovaných
+   * Google Sheets hárkov (CSV export) — viď src/lib/menu.ts. Zmena v hárku sa
+   * na webe prejaví automaticky najneskôr do `menuRevalidateSeconds` sekúnd,
+   * bez nutnosti nový build/deploy.
    *
-   * Ako získať URL:
+   * URL nižšie sú predvolené (fungujú „z krabice"), dajú sa prepísať cez
+   * premenné prostredia ALACARTE_MENU_CSV_URL / DAILY_MENU_CSV_URL (viď
+   * .env.example), napr. ak sa hárok niekedy presunie do iného zošitu.
+   *
+   * Ako znova získať URL, ak treba:
    *  1. V Google Sheets: Súbor → Zdieľať → Publikovať na web
    *  2. Vyber konkrétny hárok a formát "Hodnoty oddelené čiarkou (.csv)"
-   *  3. Skopíruj vygenerovanú URL do .env ako MENU_SHEET_CSV_URL
    *
-   * Očakávané stĺpce v hárku (názvy stĺpcov nerozlišujú veľkosť písmen):
-   *   kategoria, nazov, popis, cena, nazov_en, popis_en, kategoria_en
-   *   (posledné tri sú voliteľné anglické preklady)
+   * Očakávané stĺpce (presne v tomto poradí; riadok 1 = hlavička, riadok 2 =
+   * trvalý príkladový záznam, ktorý sa nikdy nenačíta — skutočné dáta teda
+   * začínajú až riadkom 3). Načíta sa len riadok so stĺpcom "Aktívne" = "ÁNO".
+   *   Jedálny listok: Kategória, Názov jedla, Popis, Cena (€),
+   *                   Fotka (názov súboru), Poradie, Aktívne
+   *   Denné menu:     Deň, Kategória, Názov jedla, Popis, Cena (€),
+   *                   Poradie, Aktívne
+   *
+   * Ak sa CSV nepodarí stiahnuť alebo je prázdne, použijú sa predvolené dáta
+   * z src/data/fallback-menu.ts a src/data/daily-menu.ts — stránka /menu teda
+   * nikdy nie je prázdna ani rozbitá.
    */
-  menuSheetCsvUrl: process.env.MENU_SHEET_CSV_URL ?? "",
+  alacarteMenuCsvUrl:
+    process.env.ALACARTE_MENU_CSV_URL ??
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSc46ssVcMKCEp2_LkSqVMH36MUyPVIvKUHkaTVuBzP_rAcnxkmFTtkOKSlWuBGaxp3CZAcbEjyZVl1/pub?gid=1089322323&single=true&output=csv",
+  dailyMenuCsvUrl:
+    process.env.DAILY_MENU_CSV_URL ??
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSc46ssVcMKCEp2_LkSqVMH36MUyPVIvKUHkaTVuBzP_rAcnxkmFTtkOKSlWuBGaxp3CZAcbEjyZVl1/pub?gid=109833948&single=true&output=csv",
 
   /** Ako často (v sekundách) Next.js znovu načíta menu z Google Sheets (ISR). */
-  menuRevalidateSeconds: 3600,
+  menuRevalidateSeconds: 300,
 
   /**
    * ==========================================================================
