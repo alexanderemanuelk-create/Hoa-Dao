@@ -14,6 +14,28 @@ interface MenuProps {
   dailySource?: MenuSource;
 }
 
+/**
+ * Kategórie, ktoré sa v sekcii Menu vôbec nezobrazujú (ani dlaždica, ani plný
+ * zoznam) — bez ohľadu na to, či dáta idú z Google Sheets alebo z predvolených
+ * súborov. Názov musí sedieť presne s hodnotou v stĺpci "Kategória".
+ */
+const HIDDEN_CATEGORIES = new Set([
+  "Prílohy",
+  "Nápoje – nealkoholické",
+  "Nápoje – čaj",
+  "Nápoje – káva",
+  "Nápoje – alkoholické",
+]);
+
+/** ID kotvy pre kategóriu (dlaždica hore → skok na jej plný zoznam nižšie). */
+function categorySlug(category: string): string {
+  return `menu-${category
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\p{L}\p{N}-]/gu, "")}`;
+}
+
 /** Riadok jednej à la carte položky – voliteľná fotka, číslo, názov,
  *  hmotnosť, alergény, popis a buď jedna cena, alebo zoznam variantov. */
 function AlacarteItem({ item, lang }: { item: MenuItem; lang: "sk" | "en" }) {
@@ -85,6 +107,7 @@ function AlacarteItem({ item, lang }: { item: MenuItem; lang: "sk" | "en" }) {
 
 export function Menu({ categories, dailyMenu }: MenuProps) {
   const { t, lang } = useLanguage();
+  const visibleCategories = categories.filter((c) => !HIDDEN_CATEGORIES.has(c.category));
 
   return (
     <section id="menu" className="bg-split-bg">
@@ -150,12 +173,43 @@ export function Menu({ categories, dailyMenu }: MenuProps) {
           {t("menu.alacarteHeading")}
         </h3>
 
-        <div className="mt-8 flex flex-col gap-8">
-          {categories.map((category, idx) => {
+        {/* Dlaždice kategórií — fotka + názov, klik skočí na plný zoznam nižšie.
+            Počet dlaždíc sa prispôsobí počtu kategórií v Google Sheets. */}
+        <div className="mx-auto mt-8 grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(6.5rem,1fr))] gap-4 sm:gap-5">
+          {visibleCategories.map((category) => {
+            const categoryName =
+              lang === "en" && category.categoryEn ? category.categoryEn : category.category;
+            const photo = alacarteCategoryPhotos[category.category] ?? null;
+
+            return (
+              <a
+                key={category.category}
+                href={`#${categorySlug(category.category)}`}
+                className="group flex flex-col items-center gap-2.5"
+              >
+                <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-gold/20 transition-transform duration-200 group-hover:scale-[1.03]">
+                  <PlaceholderImage
+                    src={photo}
+                    alt={categoryName}
+                    replaceHint="FOTO KATEGÓRIE — nastavte cestu v src/data/menu-photos.ts"
+                    sizes="(min-width: 1024px) 10vw, 30vw"
+                  />
+                </div>
+                <span className="text-center text-xs font-medium uppercase leading-tight tracking-wide text-split-ink/70 group-hover:text-split-ink">
+                  {categoryName}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+
+        <div className="mt-10 flex flex-col gap-8">
+          {visibleCategories.map((category, idx) => {
             const categoryName =
               lang === "en" && category.categoryEn ? category.categoryEn : category.category;
             const photo = alacarteCategoryPhotos[category.category] ?? null;
             const photoRight = idx % 2 === 1;
+            const anchorId = categorySlug(category.category);
 
             const card = (
               <div className="flex-1 rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8">
@@ -177,7 +231,7 @@ export function Menu({ categories, dailyMenu }: MenuProps) {
 
             if (!photo) {
               return (
-                <div key={category.category} className="flex">
+                <div key={category.category} id={anchorId} className="flex scroll-mt-24">
                   {card}
                 </div>
               );
@@ -186,7 +240,8 @@ export function Menu({ categories, dailyMenu }: MenuProps) {
             return (
               <div
                 key={category.category}
-                className={`flex flex-col gap-4 lg:items-stretch lg:gap-8 ${
+                id={anchorId}
+                className={`flex scroll-mt-24 flex-col gap-4 lg:items-stretch lg:gap-8 ${
                   photoRight ? "lg:flex-row-reverse" : "lg:flex-row"
                 }`}
               >

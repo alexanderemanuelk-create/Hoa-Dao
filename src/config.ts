@@ -103,7 +103,7 @@ export const siteConfig = {
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSc46ssVcMKCEp2_LkSqVMH36MUyPVIvKUHkaTVuBzP_rAcnxkmFTtkOKSlWuBGaxp3CZAcbEjyZVl1/pub?gid=109833948&single=true&output=csv",
 
   /** Ako často (v sekundách) Next.js znovu načíta menu z Google Sheets (ISR). */
-  menuRevalidateSeconds: 300,
+  menuRevalidateSeconds: 60,
 
   /**
    * ==========================================================================
