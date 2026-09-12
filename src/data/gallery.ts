@@ -69,4 +69,10 @@ export const galleryImages: GalleryImage[] = [
     alt: "Vchod do reštaurácie HOA ĐÀO s vývesným štítom",
     altEn: "Entrance to HOA ĐÀO restaurant with the storefront sign",
   },
+  {
+    id: "gallery-11",
+    src: "/images/gallery/12.png",
+    alt: "Interiér s výhľadom na vchod a parkovisko",
+    altEn: "Interior with a view of the entrance and parking lot",
+  },
 ];
