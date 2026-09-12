@@ -17,7 +17,7 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: "gallery-2",
-    src: null,
+    src: "/images/gallery/10.png",
     alt: "Interiér reštaurácie so zelenou obkladovou stenou",
     altEn: "Restaurant interior with a green tiled wall",
   },

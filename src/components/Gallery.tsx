@@ -44,13 +44,13 @@ export function Gallery() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-split-ink/95 p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-6"
         >
           <button
             type="button"
             onClick={lightbox.close}
             aria-label={t("gallery.lightboxClose")}
-            className="absolute right-6 top-6 text-split-bg/80 transition-colors hover:text-split-bg"
+            className="absolute right-6 top-6 text-white/80 transition-colors hover:text-white"
           >
             <CloseIcon className="h-6 w-6" />
           </button>
@@ -59,7 +59,7 @@ export function Gallery() {
             type="button"
             onClick={lightbox.prev}
             aria-label={t("gallery.lightboxPrev")}
-            className="absolute left-4 text-split-bg/70 transition-colors hover:text-split-bg sm:left-8"
+            className="absolute left-4 text-white/70 transition-colors hover:text-white sm:left-8"
           >
             <ChevronLeftIcon className="h-8 w-8" />
           </button>
@@ -77,7 +77,7 @@ export function Gallery() {
             type="button"
             onClick={lightbox.next}
             aria-label={t("gallery.lightboxNext")}
-            className="absolute right-4 text-split-bg/70 transition-colors hover:text-split-bg sm:right-8"
+            className="absolute right-4 text-white/70 transition-colors hover:text-white sm:right-8"
           >
             <ChevronRightIcon className="h-8 w-8" />
           </button>
