@@ -63,4 +63,10 @@ export const galleryImages: GalleryImage[] = [
     alt: "Džbán ľadového čaju s citrusmi a mätou",
     altEn: "Pitcher of iced tea with citrus and mint",
   },
+  {
+    id: "gallery-10",
+    src: "/images/gallery/11.png",
+    alt: "Vchod do reštaurácie HOA ĐÀO s vývesným štítom",
+    altEn: "Entrance to HOA ĐÀO restaurant with the storefront sign",
+  },
 ];
