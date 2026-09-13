@@ -29,13 +29,13 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: "gallery-4",
-    src: null,
+    src: "/images/gallery/13.png",
     alt: "Priestranná jedáleň s dreveným stropom",
     altEn: "Spacious dining room with a wooden ceiling",
   },
   {
     id: "gallery-5",
-    src: null,
+    src: "/images/gallery/14.png",
     alt: "Stoly s dekorom kvetov broskyne na stene",
     altEn: "Tables with peach-blossom decor on the wall",
   },
@@ -59,7 +59,7 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: "gallery-9",
-    src: null,
+    src: "/images/gallery/15.png",
     alt: "Džbán ľadového čaju s citrusmi a mätou",
     altEn: "Pitcher of iced tea with citrus and mint",
   },
