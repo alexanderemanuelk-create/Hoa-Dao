@@ -114,54 +114,84 @@ export function Menu({ categories, dailyMenu }: MenuProps) {
       <div className="mx-auto max-w-6xl px-6 pt-12 pb-10 lg:px-10 lg:pt-16 lg:pb-10">
         {/* ---------------------------------------------------------------- */}
         {/* DENNÉ MENU — naživo z Google Sheets (src/lib/menu.ts, getDailyMenu) */}
+        {/* Kvetinová dekorácia (strom) po stranách: /public/images/menu/tree-decor.png */}
         {/* ---------------------------------------------------------------- */}
-        <div>
-          <h3 className="text-center font-fraunces text-2xl font-medium tracking-tight text-split-ink sm:text-3xl">
-            {t("menu.dailyHeading")}
-          </h3>
-          <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-split-ink/60">
-            {t("menu.dailyNote")}
-          </p>
+        <div className="relative w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)]">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 z-0 hidden overflow-hidden opacity-90 md:block md:h-96 md:w-64 lg:h-[28rem] lg:w-80 xl:h-[32rem] xl:w-96"
+          >
+            <Image
+              src="/images/menu/tree-decor.png"
+              alt=""
+              fill
+              quality={90}
+              sizes="24rem"
+              className="object-cover object-left"
+            />
+          </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-1/2 z-0 hidden -translate-y-1/2 -scale-x-100 overflow-hidden opacity-90 md:block md:h-96 md:w-64 lg:h-[28rem] lg:w-80 xl:h-[32rem] xl:w-96"
+          >
+            <Image
+              src="/images/menu/tree-decor.png"
+              alt=""
+              fill
+              quality={90}
+              sizes="24rem"
+              className="object-cover object-left"
+            />
+          </div>
 
-          <div className="mt-8 flex flex-col gap-6">
-            {dailyMenu.map((day) => {
-              const dayName = lang === "en" ? day.dayEn : day.day;
+          <div className="relative z-10 mx-auto max-w-2xl px-6 lg:px-10">
+            <h3 className="text-center font-fraunces text-2xl font-medium tracking-tight text-split-ink sm:text-3xl">
+              {t("menu.dailyHeading")}
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-split-ink/60">
+              {t("menu.dailyNote")}
+            </p>
 
-              return (
-                <div
-                  key={day.day}
-                  className="rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8"
-                >
-                  <h4 className="font-fraunces text-xl font-medium uppercase tracking-[0.08em] text-split-ink">
-                    {dayName}
-                  </h4>
-                  <div className="mt-3 mb-5 h-px w-10 bg-split-accent" />
+            <div className="mt-8 flex flex-col gap-6">
+              {dailyMenu.map((day) => {
+                const dayName = lang === "en" ? day.dayEn : day.day;
 
-                  <ol className="flex flex-col gap-3.5">
-                    {day.items.map((item, i) => (
-                      <li key={i}>
-                        <div className="flex items-baseline gap-3">
-                          <span className="shrink-0 text-split-ink/40 tabular-nums">{i + 1}.</span>
-                          <span className="font-medium text-split-ink">
-                            {item.name}
-                            {item.spicy && <span aria-label="pikantné"> 🌶</span>}
-                          </span>
-                          <span aria-hidden className="h-px min-w-6 flex-1 bg-split-ink/15" />
-                          <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
-                            {item.price}
-                          </span>
-                        </div>
-                        {item.description && (
-                          <p className="mt-1 text-sm leading-relaxed text-split-ink/55">
-                            {item.description}
-                          </p>
-                        )}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    key={day.day}
+                    className="rounded-2xl border border-gold/20 bg-split-bg-alt p-6 lg:p-8"
+                  >
+                    <h4 className="font-fraunces text-xl font-medium uppercase tracking-[0.08em] text-split-ink">
+                      {dayName}
+                    </h4>
+                    <div className="mt-3 mb-5 h-px w-10 bg-split-accent" />
+
+                    <ol className="flex flex-col gap-3.5">
+                      {day.items.map((item, i) => (
+                        <li key={i}>
+                          <div className="flex items-baseline gap-3">
+                            <span className="shrink-0 text-split-ink/40 tabular-nums">{i + 1}.</span>
+                            <span className="font-medium text-split-ink">
+                              {item.name}
+                              {item.spicy && <span aria-label="pikantné"> 🌶</span>}
+                            </span>
+                            <span aria-hidden className="h-px min-w-6 flex-1 bg-split-ink/15" />
+                            <span className="shrink-0 whitespace-nowrap font-medium text-split-ink">
+                              {item.price}
+                            </span>
+                          </div>
+                          {item.description && (
+                            <p className="mt-1 text-sm leading-relaxed text-split-ink/55">
+                              {item.description}
+                            </p>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 

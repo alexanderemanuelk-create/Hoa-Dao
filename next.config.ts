@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  images: {
+    // 75 je predvolená kvalita next/image, 90 používajú dekoratívne fotky
+    // (napr. strom v Menu.tsx), kde záleží na ostrosti.
+    qualities: [75, 90],
+  },
 };
 
 export default nextConfig;
